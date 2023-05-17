@@ -1,0 +1,101 @@
+<title>
+    Configuração dos Jogos
+</title>
+<template>
+    <style>
+
+    </style>
+
+
+    <fieldset style="margin: 10px;">
+        <legend>Jogos</legend>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+            <div>
+                <h2>Grupo A</h2>
+                <table id="JA"></table>
+                <button id="btnGeraA" class="btn btn-primary">Gerar Jogos</button>    
+            </div>
+            <div>
+                <h2>Grupo B</h2>
+                <table id="JB"></table>
+                <button id="btnGeraB" class="btn btn-primary">Gerar Jogos</button>    
+            </div>
+
+        </div>
+    </fieldset>
+
+
+</template>
+<script>
+
+    function geraGrupo(GP){
+
+        function sets(A,B){
+            const j = []
+            for(let k=0; k<3; k++){
+                const set = new Object
+                set.player1 = 0
+                set.player2 = 0
+                j.push(set)
+            }
+            return j
+        }
+
+
+        const base =  Array.from(document.querySelector(`#G${GP}`).children) 
+        const jogos = []
+        for(let i=1; i<base.length; i++){
+            const data_A = base[i].data             
+            for(let j=i+1; j<base.length; j++){
+                const data_B = base[j].data
+                const game = new Object
+//                game.player1 = data_A.nome
+//                game.player2 = data_B.nome
+                game.id_1 = data_A.id
+                game.id_2 = data_B.id
+                game.sets = sets(data_A,data_B)
+                jogos.push(game)
+            }            
+        }
+
+        return jogos
+    }
+
+    function saveJogos(GP){
+        if(confirm('ATENÇÂO, todos os jogos anteriores serão perdidos!, Deseja gerar novamente todos os jogos deste grupo?')){
+
+            const jogo_grupo = geraGrupo(GP)
+
+
+            const params = new Object;
+            params.id = 'DEFAULT'
+            params.grupo = GP
+
+            const myPromisse = queryDB(params,7)
+
+            myPromisse.then((resolve)=>{
+                const myPromisse_2 = queryDB(params,8)
+                myPromisse.then((resolve)=>{
+                    for(let i=0; i<jogo_grupo.length; i++){
+                        params.id_jogador_A = jogo_grupo[i].id_1
+                        params.id_jogador_B = jogo_grupo[i].id_2
+                        queryDB(params,9)
+                    }
+                })
+            })
+            console.log(jogo_grupo)
+        }        
+    }
+
+
+
+    document.querySelector('#btnGeraA').addEventListener('click',()=>{        
+        saveJogos('A')
+    })
+
+    document.querySelector('#btnGeraB').addEventListener('click',()=>{
+        saveJogos('B')
+    })
+
+
+</script>

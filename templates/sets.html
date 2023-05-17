@@ -1,0 +1,123 @@
+<title>
+    Resultado do Jogo
+</title>
+<template>
+    <style>
+
+        .col{
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            gap: 20px;
+        }
+
+        .line{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-line{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        h2{
+            padding: 0 10px;
+        }
+
+        input{
+            text-align: center;
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 800;
+            padding: 1px;
+            width: 80px;
+        }
+
+
+    </style>
+
+    <fieldset style="margin: 10px;">
+        <legend>Sets</legend>
+        <div class="col">
+            <input id="match_date" type="date" style="width: auto; padding: 2px 20px;">
+            <h2 id="jogo"></h2>
+            <div class="line">
+                
+                <input id="A1"  inputmode="decimal" type="text" onkeyup="valInt(this)"> 
+                <h2>X</h2>
+                <input id="B1"  inputmode="decimal" type="text" onkeyup="valInt(this)">
+            </div>
+            <div class="line">
+                
+                <input id="A2"  inputmode="decimal" type="text" onkeyup="valInt(this)"> 
+                <h2>X</h2>
+                <input id="B2"  inputmode="decimal" type="text" onkeyup="valInt(this)">
+            </div>
+            <div class="line">
+                
+                <input id="A3"  inputmode="decimal" type="text" onkeyup="valInt(this)"> 
+                <h2>X</h2>
+                <input id="B3"  inputmode="decimal" type="text" onkeyup="valInt(this)">
+            </div>
+        </div>
+        <div class="btn-line">
+            <button  class="btn btn-primary" id="btnSaveSet">Salvar</button>
+        </div>
+    </fieldset>
+
+</template>
+<script>
+
+    document.querySelector('#jogo').innerHTML = `${mainData.jogador_A.toUpperCase()} X ${mainData.jogador_B.toUpperCase()} `
+    document.querySelector('#A1').value = mainData.sets_1A
+    document.querySelector('#B1').value = mainData.sets_1B
+    document.querySelector('#A2').value = mainData.sets_2A
+    document.querySelector('#B2').value = mainData.sets_2B
+    document.querySelector('#A3').value = mainData.sets_3A
+    document.querySelector('#B3').value = mainData.sets_3B
+
+    if(mainData.dia.substr(0,4) == '0000'){
+        const today = new Date
+        const day = today.getFullYear()+'-'+today.getMonth().toString().padStart(2,0) +'-'+today.getDate().toString().padStart(2,0)
+        document.querySelector('#match_date').value = day
+    }else{
+        document.querySelector('#match_date').value = mainData.dia
+    }
+
+
+
+    document.querySelector('#btnSaveSet').addEventListener('click',()=>{
+
+        const params = new Object;
+            params.id = mainData.id 
+            params.dia = document.querySelector('#match_date').value
+            params.sets_1A = document.querySelector('#A1').value
+            params.sets_1B = document.querySelector('#B1').value
+            params.sets_2A = document.querySelector('#A2').value
+            params.sets_2B = document.querySelector('#B2').value
+            params.sets_3A = document.querySelector('#A3').value
+            params.sets_3B = document.querySelector('#B3').value
+
+            const myPromisse = queryDB(params,9)
+
+        myPromisse.then((resolve)=>{
+            
+            fillTabGrupo(document.querySelector('#grupo01'),'A')
+            fillTabGrupo(document.querySelector('#grupo02'),'B')
+            fillTabJogos(document.querySelector('#JA'),'A')
+            fillTabJogos(document.querySelector('#JB'),'B')                        
+            document.getElementById("myModal").style.display = "none";
+        })
+
+
+    })
+
+
+
+</script>

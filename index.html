@@ -1,0 +1,200 @@
+
+
+<html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Torneio de Tenis</title>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+      <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+
+      <div id="whatsapp">
+        <a href="https://wa.me/5512981426990" target="_blank" rel="noopener noreferrer"> 
+          <img src="assets/whatsapp.png">
+        </a>
+      </div>      
+
+      <nav class="navbar">
+        <div class="navbar-container container">
+            <input type="checkbox" name="" id="">
+            <div class="hamburger-lines">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </div>
+            <ul class="menu-items">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#atletas">Atletas</a></li>
+                <li><a href="#grupos">Grupos</a></li>
+                <li><a href="#jogos">Jogos</a></li>
+                <li><a href="#matamata">Play-Off</a></li>                
+            </ul>
+            <p></p>
+        </div>
+    </nav>
+
+    <div class="main-content"> 
+
+      <section id="home">
+        <h2 class="h2-title">Home</h2>
+          <div class="about-wrapper container">
+            <div class="about-text">
+              <h2 style="text-align: center;">Regras</h2>
+              <p>Os jogos serão com melhor de 3 sets sem vantagens e se der empate de 1x1 o terceiro set será um super tie-break de 10 pontos</p>
+
+            </div>
+            <div class="about-img">
+              <img src="assets/tenis.jpg" alt="Tenis" />
+            </div>
+          </div>
+        </section>
+  
+        <section  id="atletas">         
+              <img src="assets/images/logo.png" alt="">
+            <h2 class="h2-title">Atletas</h2>
+            <table id="tbl_atletas"></table>
+          
+        </section>
+        
+  
+        <section id="grupos">
+          <h2 class="h2-title">Grupos</h2>
+            <div>
+              <h2>Grupo 01</h2>
+              <table id="grupo01"></table>
+            </div>
+            <div>
+              <h2>Grupo 02</h2>
+              <table id="grupo02"></table>
+            </div>  
+        </section>
+  
+        <section id="jogos" >
+              <h2 class="h2-title">Fase de Grupos</h2>
+              <fieldset>
+                <legend>Jogos</legend>
+                  <div>
+                      <h2>Grupo 1</h2>
+                      <table id="JA" cellspacing="0" rules="none"></table>
+                  </div>
+                  <div>
+                      <h2>Grupo 2</h2>
+                      <table id="JB" cellspacing="0" rules="none"></table>
+                  </div>
+              </fieldset>
+        </section>
+  
+        <section id="matamata">
+          <h2 class="h2-title">Play-Off</h2>
+          <div class="food-container container">
+            </div> 
+          </div>
+        </section>
+
+    </div>
+
+
+      <footer id="footer">
+        <h2>Torneio de Tenis da Capital do Vale &copy; 
+          <br>Clube Jequitibá
+        </h2>
+      </footer>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+            <div class="modal-header">
+        <!--        <span class="close">&times;</span> -->
+                <h2 id="md-header"></h2>
+            </div>
+            <div id="md-body"> </div>
+                <div class="center-btn">
+                    <button class="btn close btn-primary">Fechar</button>
+                </div>
+            </div>
+
+        </div>      
+    </body>
+    <!-- 
+      .................../ JS Code for smooth scrolling /...................... -->
+  
+    <script src="main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Add smooth scrolling to all links
+        $("a").on("click", function (event) {
+          // Make sure this.hash has a value before overriding default behavior
+          if (this.hash !== "") {
+            // Prevent default anchor click behavior
+            event.preventDefault();
+  
+            // Store hash
+            var hash = this.hash;
+  
+            // Using jQuery's animate() method to add smooth page scroll
+            // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+            $("html, body").animate(
+              {
+                scrollTop: $(hash).offset().top,
+              },
+              800,
+              function () {
+                // Add hash (#) to URL when done scrolling (default click behavior)
+                window.location.hash = hash;
+              }
+            );
+          } // End if
+        });
+      });
+
+
+      fillTabAtleta(document.querySelector('#tbl_atletas'))
+
+      fillTabGrupo(document.querySelector('#grupo01'),'A')
+      fillTabGrupo(document.querySelector('#grupo02'),'B')
+      fillTabJogos(document.querySelector('#JA'),'A')
+      fillTabJogos(document.querySelector('#JB'),'B')
+
+      function tabJogos(e){
+        const table = e.target.parentNode.parentNode
+        const row = e.target.parentNode
+        const index = Array.from(table.children).indexOf(row)
+        if(index > 0){
+          mainData = e.target.parentNode.data
+          
+          if(mainData != undefined){
+              mainData.origem = 'edit'
+              console.log(mainData)
+              openHTML('sets.html')
+          }
+        }
+
+      }
+
+
+      document.querySelector('#JA').addEventListener('click',(e)=>{
+        tabJogos(e)
+      })
+
+      document.querySelector('#JB').addEventListener('click',(e)=>{
+        tabJogos(e)
+      })
+
+
+
+    </script>
+  </html>
+  
+  

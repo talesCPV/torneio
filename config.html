@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />    
+    <title>Configurações</title>
+</head>
+<body>
+    <div class="center-div">
+        <fieldset>
+            <legend>Atletas</legend>
+            <table id="tblAtleta"></table>
+            <button class="btn btn-primary" id="btnAtleta">Novo</button>
+        </fieldset>    
+    </div>
+
+    <div class="center-div">
+
+        <fieldset>
+            <legend>Grupos</legend>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <div>
+                    <h2>Grupo A</h2>
+                    <table id="GA"></table>
+                </div>
+                <div>
+                    <h2>Grupo B</h2>
+                    <table id="GB"></table>
+                </div>
+    
+            </div>
+            <button class="btn btn-primary" id="btnGrupos">Configurar Grupos</button>
+        </fieldset>
+
+    </div>
+
+    <div class="center-div">
+        <fieldset>
+            <legend>Jogos</legend>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px;">
+                <div>
+                    <h2>Grupo A</h2>
+                    <table id="JA"></table>
+                </div>
+                <div>
+                    <h2>Grupo B</h2>
+                    <table id="JB"></table>
+                </div>
+    
+            </div>
+            <button class="btn btn-primary" id="btnJogos">Configurar Jogos</button>
+
+        </fieldset>
+
+    </div>
+
+
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+        <div class="modal-header">
+    <!--        <span class="close">&times;</span> -->
+            <h2 id="md-header"></h2>
+        </div>
+        <div id="md-body"> </div>
+            <div class="center-btn">
+                <button class="btn close btn-primary">Fechar</button>
+            </div>
+        </div>
+
+    </div> 
+
+</body>
+<script src="main.js"></script>
+<script>
+
+    fillTabAtleta(document.querySelector('#tblAtleta'))
+    fillTabGrupo(document.querySelector('#GA'),'A')
+    fillTabGrupo(document.querySelector('#GB'),'B')
+    fillTabJogos(document.querySelector('#JA'),'A')
+    fillTabJogos(document.querySelector('#JB'),'B')
+
+    document.querySelector('#btnAtleta').addEventListener('click',()=>{
+        mainData = new Object
+        mainData.origem = 'new'
+        openHTML('novoAtleta.html')
+    })
+
+    document.querySelector('#tblAtleta').addEventListener('click',(e)=>{
+        const table = e.target.parentNode.parentNode
+        const row = e.target.parentNode
+        const index = Array.from(table.children).indexOf(row)
+        if(index > 0){
+            mainData = e.target.parentNode.data
+            if(mainData != undefined){
+                mainData.origem = 'edit'
+                openHTML('novoAtleta.html')
+            }
+
+        }
+    })
+
+    document.querySelector('#btnGrupos').addEventListener('click',()=>{
+        openHTML('novoGrupo.html')
+    })
+
+    document.querySelector('#btnJogos').addEventListener('click',()=>{
+        openHTML('novoJogos.html')
+    })
+    
+
+
+
+</script>
+</html>

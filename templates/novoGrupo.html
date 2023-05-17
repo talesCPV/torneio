@@ -1,0 +1,105 @@
+<title>
+    Configuração dos Grupos
+</title>
+<template>
+    <style>
+        .line{
+            display: flex;
+            margin: 5px;
+        }
+
+        .line label{
+            width: 100px;
+        }
+
+        input[type=range]::-moz-range-track{
+            box-shadow: 3px 3px 3px #00AA00;
+            border: 2px solid #83E584;
+            height: 23px;
+           
+            border-radius: 23px;
+            background: #439643;
+            cursor: pointer;
+
+        }
+
+    </style>
+
+
+    <fieldset style="margin: 10px;">
+        <legend>Grupos</legend>
+        <div style="display: flex;">
+            <select id="cmbJogadores" size="15"></select>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: space-between; margin: 10px;">
+                <button id="addA"> A >> </button>
+                <button id="subA"> A << </button>
+                <button id="addB"> B >> </button>
+                <button id="subB"> B << </button>
+            </div>
+            <div>
+                <h2>Grupo A</h2>
+                <select id="cmbgpA" size="7"></select>
+                <h2>Grupo B</h2>
+                <select id="cmbgpB" size="7"></select>
+            </div>
+        </div>
+        <button class="btn btn-primary" id="btnSaveGrupo">Salvar</button>
+    </fieldset>
+
+
+</template>
+<script>
+
+    fillCmbAtleta(document.querySelector('#cmbJogadores'),0)
+
+    function changeOptions(S1,S2){
+        const A = document.getElementById(S1)
+        const B = document.getElementById(S2)
+        const index = A.selectedIndex        
+        if(index >= 0){
+            B.appendChild(A.options[index])
+        }
+
+    }
+
+
+    document.querySelector('#addA').addEventListener('click',()=>{
+        changeOptions('cmbJogadores','cmbgpA')       
+    })
+
+    document.querySelector('#subA').addEventListener('click',()=>{
+        changeOptions('cmbgpA','cmbJogadores')
+    })
+
+    document.querySelector('#addB').addEventListener('click',()=>{
+        changeOptions('cmbJogadores','cmbgpB')       
+    })
+
+    document.querySelector('#subB').addEventListener('click',()=>{
+        changeOptions('cmbgpB','cmbJogadores')
+    })
+
+    document.querySelector('#btnSaveGrupo').addEventListener('click',()=>{
+        if(confirm('Todos os grupos e jogos criados anteriormente serão deletados, deseja continuar?')){
+            const params = new Object;            
+            const myPromisse = queryDB(params,3);
+            myPromisse.then((resolve)=>{
+                const gpA =  Array.from(document.querySelector('#cmbgpA'))
+                for(let i=0; i<gpA.length; i++){
+                    params.grupo = "A"
+                    params.id_jogador = gpA[i].value
+                    queryDB(params,4);
+                }
+                const gpB =  Array.from(document.querySelector('#cmbgpB'))
+                for(let i=0; i<gpB.length; i++){
+                    params.grupo = "B"
+                    params.id_jogador = gpB[i].value
+                    queryDB(params,4);
+                }
+                alert('Grupos salvos com sucesso!')
+            })
+        }
+    })
+
+
+</script>

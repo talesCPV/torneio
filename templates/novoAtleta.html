@@ -1,0 +1,90 @@
+<title>
+    Cadastro de Atletas
+</title>
+<template>
+    <style>
+        .line{
+            display: flex;
+            margin: 5px;
+        }
+
+        .line label{
+            width: 100px;
+        }
+
+        input[type=range]::-moz-range-track{
+            box-shadow: 3px 3px 3px #00AA00;
+            border: 2px solid #83E584;
+            height: 23px;
+           
+            border-radius: 23px;
+            background: #439643;
+            cursor: pointer;
+
+        }
+
+    </style>
+
+
+    <fieldset>
+        <legend>Atleta</legend>
+
+        <div class="line">
+            <label for="edtNome">Nome</label>
+            <input id="edtNome" type="text">
+        </div>
+
+        <div class="line">
+            <label for="edtNivel">Nível</label>
+            <input id="edtNivel" type="range" min="0" max="5">
+  
+        </div>
+
+        <button  class="btn btn-primary" id="btnAddAtleta">Salvar</button>
+        <button  class="btn btn-primary" id="btnDelAtleta">Deletar</button>
+
+
+    </fieldset>
+
+
+</template>
+<script>
+
+    if(mainData.origem == 'edit'){
+        document.querySelector('#edtNome').value = mainData.nome
+        document.querySelector('#edtNivel').value = mainData.nivel
+    }else{
+        document.getElementById("btnDelAtleta").style.display = "none";
+        document.querySelector('#edtNome').value = ''
+        document.querySelector('#edtNivel').value = 0
+    }
+
+    document.querySelector('#btnAddAtleta').addEventListener('click',()=>{
+        const params = new Object;
+            params.id = mainData.origem == 'edit' ? mainData.id : 'DEFAULT'
+            params.nome = document.querySelector('#edtNome').value.trim().toUpperCase()
+            params.nivel = document.querySelector('#edtNivel').value
+
+            const myPromisse = queryDB(params,1)
+
+        myPromisse.then((resolve)=>{
+            fillTabAtleta(document.querySelector('#tblAtleta'))
+            document.getElementById("myModal").style.display = "none";
+        })
+    })
+
+    document.querySelector('#btnDelAtleta').addEventListener('click',()=>{
+        const params = new Object;
+            params.id = mainData.id
+            const myPromisse = queryDB(params,2)
+
+        myPromisse.then((resolve)=>{
+            fillTabAtleta(document.querySelector('#tblAtleta'))
+            document.getElementById("myModal").style.display = "none";
+        })
+    })
+
+
+
+
+</script>
