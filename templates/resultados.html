@@ -1,0 +1,107 @@
+<title>
+    Resultados
+</title>
+<template>
+    <style>
+        .line{
+            display: flex;
+            margin: 5px;
+        }
+
+        .line label{
+            width: 100px;
+        }
+
+        input[type=range]::-moz-range-track{
+            box-shadow: 3px 3px 3px #00AA00;
+            border: 2px solid #83E584;
+            height: 23px;
+           
+            border-radius: 23px;
+            background: #439643;
+            cursor: pointer;
+
+        }
+
+        fieldset{
+            max-width: 90vw;
+        }
+
+    </style>
+
+
+    <fieldset>
+        <legend>Atleta</legend>
+
+        <div class="line">
+            
+            <input id="edtNome" type="text">
+        </div>
+
+        <div class="line">
+            
+            <input id="edtNivel" type="range" min="0" max="5">
+  
+        </div>
+
+        <button  class="btn btn-primary" id="btnAddAtleta">Salvar</button>
+
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Jogos</legend>
+        <h2 id="group_title"></h2>
+        <table id="tblMeusJogos" cellspacing="0"></table>
+    </fieldset>
+
+
+</template>
+<script>
+
+    document.querySelector('#edtNome').value = mainData.nome
+    document.querySelector('#edtNivel').value = mainData.nivel
+    document.querySelector('#group_title').innerHTML = `GRUPO ${mainData.grupo}`
+
+    const params = new Object;
+        params.id = mainData.id
+    const myPromisse = queryDB(params,12);
+    myPromisse.then((resolve)=>{
+        const json = JSON.parse(resolve)
+        console.log(json)
+        const tbl = document.querySelector('#tblMeusJogos')
+                
+        tbl.head('Jogador A, |min,X|min, |min,Jogador B,','Upp,Upp,str,let,str,Upp')    
+        for(let i=0; i<json.length; i++){
+            tbl.plot(json[i],'jogador_A,PLACAR_A|min,X|min,PLACAR_B|min,jogador_B','Upp,int,let,int,Upp') 
+        }
+
+    })
+
+    document.querySelector('#btnAddAtleta').addEventListener('click',()=>{
+        const save_params = new Object;
+            save_params.id =  mainData.id 
+            save_params.nome = document.querySelector('#edtNome').value.trim().toUpperCase()
+            save_params.nivel = document.querySelector('#edtNivel').value
+
+            const myPromisse = queryDB(save_params,1)
+
+        myPromisse.then((resolve)=>{
+            fillTabAtleta(document.querySelector('#tbl_atletas'))
+            document.getElementById("myModal").style.display = "none";
+        })
+    })
+
+
+    document.querySelector('#tblMeusJogos').addEventListener('click',(e)=>{
+          const table = e.target.parentNode.parentNode
+          const row = e.target.parentNode
+          const index = Array.from(table.children).indexOf(row)
+          if(index > 0){
+            mainData = e.target.parentNode.data
+            alert(` SET 01 - ${mainData.sets_1A} x ${mainData.sets_1B} \n SET 02 - ${mainData.sets_2A} x ${mainData.sets_2B}\n SET 03 - ${mainData.sets_3A} x ${mainData.sets_3B}`)
+          }
+      })
+
+
+</script>

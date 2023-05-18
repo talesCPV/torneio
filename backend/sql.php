@@ -10,7 +10,7 @@ $query_db = array(
     "5"  => 'SELECT J.*, G.grupo FROM tb_jogadores AS J
             INNER JOIN tb_grupos AS G
             ON J.id = G.id_jogador
-            AND G.grupo = "x00"            
+                        
             ORDER BY J.nivel DESC;',
     "6"  => 'SELECT J.* FROM tb_jogadores AS J
             INNER JOIN tb_grupos AS G
@@ -46,6 +46,14 @@ $query_db = array(
             AND J.id_jogador_B = P2.id
             AND J.grupo = "x00"
             ORDER BY J.dia DESC; ',
+    "12"  => 'SELECT J.* ,((J.sets_1A > J.sets_1B)+(J.sets_2A>J.sets_2B)+(J.sets_3A>J.sets_3B)) AS PLACAR_A,((J.sets_1A < J.sets_1B)+(J.sets_2A<J.sets_2B)+(J.sets_3A<J.sets_3B)) AS PLACAR_B,  P1.nome AS jogador_A, P2.nome AS jogador_B
+        FROM tb_jogos AS J
+        INNER JOIN tb_jogadores AS P1
+        INNER JOIN tb_jogadores AS P2
+        ON  J.id_jogador_A = P1.id
+        AND J.id_jogador_B = P2.id        
+        AND (P1.id = "x00" OR P2.id="x00")
+        ORDER BY J.dia DESC; ',
 
 
 

@@ -34,7 +34,7 @@
             <ul class="menu-items">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#atletas">Atletas</a></li>
-                <li><a href="#grupos">Grupos</a></li>
+                <li><a href="#tabela">Tabela</a></li>
                 <li><a href="#jogos">Jogos</a></li>
                 <li><a href="#matamata">Play-Off</a></li>                
             </ul>
@@ -66,8 +66,8 @@
         </section>
         
   
-        <section id="grupos">
-          <h2 class="h2-title">Grupos</h2>
+        <section id="tabela">
+          <h2 class="h2-title">Tabela</h2>
             <div>
               <h2>Grupo 01</h2>
               <table id="grupo01"></table>
@@ -95,8 +95,38 @@
   
         <section id="matamata">
           <h2 class="h2-title">Play-Off</h2>
-          <div class="food-container container">
-            </div> 
+          <div class="finais">
+
+            <div class="final">
+              <h3>Quartas</h3>
+              <div class="jogo">
+                <table cellspacing="0">
+                  <tr><td>jogo 1</td><td>2° grupo 1</td><td class="min">0</td><td class="min">x</td><td class="min">0</td><td>3° grupo 2</td></th></tr>
+                  <tr><td>jogo 2</td><td>2° grupo 2</td><td class="min">0</td><td class="min">x</td><td class="min">0</td><td>3° grupo 1</td></th></tr>
+                </table>  
+              </div>
+            </div>
+          
+            <div class="final">
+              <h3>Semi</h3>
+              <div class="jogo">
+                <table cellspacing="0"> 
+                  <tr><td>jogo 3</td><td>1° grupo 1</td><td class="min">0</td><td class="min">x</td><td class="min">0</td><td>venc jogo 1</td></th></tr>
+                  <tr><td>jogo 4</td><td>1° grupo 2</td><td class="min">0</td><td class="min">x</td><td class="min">0</td><td>venc jogo 2</td></th></tr>
+                </table>  
+              </div>
+            </div>
+
+            <div class="final">
+              <h3>Final</h3>
+              <div class="jogo">
+                <table cellspacing="0">
+                  <tr><td>jogo 5</td><td>venc jogo 3</td><td class="min">0</td><td class="min">x</td><td class="min">0</td><td>venc jogo 4</td></th></tr>
+                </table>  
+              </div>  
+            </div>
+
+
           </div>
         </section>
 
@@ -106,6 +136,7 @@
       <footer id="footer">
         <h2>Torneio de Tenis da Capital do Vale &copy; 
           <br>Clube Jequitibá
+          <br>desing by Tales Cembraneli Dantas
         </h2>
       </footer>
 
@@ -192,7 +223,17 @@
         tabJogos(e)
       })
 
-
+      document.querySelector('#tbl_atletas').addEventListener('click',(e)=>{
+          const table = e.target.parentNode.parentNode
+          const row = e.target.parentNode
+          const index = Array.from(table.children).indexOf(row)
+          if(index > 0){
+            mainData = e.target.parentNode.data
+            console.log(mainData)
+            openHTML('resultados.html')
+          }
+      })
+      
 
     </script>
   </html>
