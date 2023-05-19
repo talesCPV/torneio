@@ -207,7 +207,6 @@
           
           if(mainData != undefined){
               mainData.origem = 'edit'
-              console.log(mainData)
               openHTML('sets.html')
           }
         }
@@ -229,7 +228,6 @@
           const index = Array.from(table.children).indexOf(row)
           if(index > 0){
             mainData = e.target.parentNode.data
-            console.log(mainData)
             openHTML('resultados.html')
           }
       })

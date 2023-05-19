@@ -68,7 +68,6 @@
     const myPromisse = queryDB(params,12);
     myPromisse.then((resolve)=>{
         const json = JSON.parse(resolve)
-        console.log(json)
         const tbl = document.querySelector('#tblMeusJogos')
                 
         tbl.head('Jogador A, |min,X|min, |min,Jogador B,','Upp,Upp,str,let,str,Upp')    
