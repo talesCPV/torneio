@@ -28,7 +28,14 @@ $query_db = array(
                     (J.id = JG.id_jogador_B AND( (JG.sets_1B > JG.sets_1A)+(JG.sets_2B > JG.sets_2A)+(JG.sets_3B > JG.sets_3A) > 1)) ,1,0)) AS VITORIA,		            
         SUM( IF ( 
                     (J.id = JG.id_jogador_A AND( (JG.sets_1A < JG.sets_1B)+(JG.sets_2A < JG.sets_2B)+(JG.sets_3A < JG.sets_3B) > 1)) OR
-                    (J.id = JG.id_jogador_B AND( (JG.sets_1B < JG.sets_1A)+(JG.sets_2B < JG.sets_2A)+(JG.sets_3B < JG.sets_3A) > 1)) ,1,0)) AS DERROTA
+                    (J.id = JG.id_jogador_B AND( (JG.sets_1B < JG.sets_1A)+(JG.sets_2B < JG.sets_2A)+(JG.sets_3B < JG.sets_3A) > 1)) ,1,0)) AS DERROTA,
+
+        SUM( IF( 
+					J.id = JG.id_jogador_A,(JG.sets_1A+JG.sets_2A),IF(
+                    J.id = JG.id_jogador_B,(JG.sets_1B+JG.sets_2B),0))) AS G_PRO,
+        SUM( IF( 
+                    J.id = JG.id_jogador_A,(JG.sets_1B+JG.sets_2B),IF(
+                    J.id = JG.id_jogador_B,(JG.sets_1A+JG.sets_2A),0))) AS G_CONTRA
 
         FROM tb_jogadores AS J
         INNER JOIN tb_grupos AS G
@@ -37,7 +44,7 @@ $query_db = array(
         AND (J.id = JG.id_jogador_A OR J.id = JG.id_jogador_B)
         AND G.grupo = "x00"      
         GROUP BY J.id
-        ORDER BY VITORIA DESC, JOGOS DESC; ',
+        ORDER BY VITORIA DESC, G_PRO DESC,JOGOS DESC; ',
     "11"  => 'SELECT J.* ,((J.sets_1A > J.sets_1B)+(J.sets_2A>J.sets_2B)+(J.sets_3A>J.sets_3B)) AS PLACAR_A,((J.sets_1A < J.sets_1B)+(J.sets_2A<J.sets_2B)+(J.sets_3A<J.sets_3B)) AS PLACAR_B,  P1.nome AS jogador_A, P2.nome AS jogador_B
             FROM tb_jogos AS J
             INNER JOIN tb_jogadores AS P1

@@ -213,6 +213,16 @@
 
       }
 
+      function resultados(e){
+        const table = e.target.parentNode.parentNode
+        const row = e.target.parentNode
+        const index = Array.from(table.children).indexOf(row)
+        if(index > 0){
+          mainData = e.target.parentNode.data
+          openHTML('resultados.html')
+        }
+      }
+
 
       document.querySelector('#JA').addEventListener('click',(e)=>{
         tabJogos(e)
@@ -232,6 +242,14 @@
           }
       })
       
+      document.querySelector('#grupo01').addEventListener('click',(e)=>{
+        resultados(e)
+      })
+
+      document.querySelector('#grupo02').addEventListener('click',(e)=>{
+        resultados(e)
+      })
+
 
     </script>
   </html>
