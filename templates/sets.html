@@ -84,7 +84,7 @@
 
     if(mainData.dia.substr(0,4) == '0000'){
         const today = new Date
-        const day = today.getFullYear()+'-'+today.getMonth().toString().padStart(2,0) +'-'+today.getDate().toString().padStart(2,0)
+        const day = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2,0) +'-'+today.getDate().toString().padStart(2,0)
         document.querySelector('#match_date').value = day
     }else{
         document.querySelector('#match_date').value = mainData.dia
