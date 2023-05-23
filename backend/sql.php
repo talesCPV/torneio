@@ -18,8 +18,8 @@ $query_db = array(
             ORDER BY J.nivel DESC;',
     "7"  => 'DELETE FROM tb_sets WHERE id_jogo IN (SELECT id FROM tb_jogos WHERE grupo="x01");',
     "8"  => 'DELETE FROM tb_jogos WHERE grupo="x01";',
-    "9"  => 'INSERT INTO tb_jogos (id,grupo,id_jogador_A,id_jogador_B,dia) VALUES ("x00","x01","x02","x03","x04")
-            ON DUPLICATE KEY UPDATE dia="x01", sets_1A="x02", sets_1B="x03", sets_2A="x04", sets_2B="x05", sets_3A="x06", sets_3B="x07";',
+    "9"  => 'INSERT INTO tb_jogos (id,grupo,id_jogador_A,id_jogador_B,dia,hora) VALUES ("x00","x01","x02","x03","x04","x08")
+            ON DUPLICATE KEY UPDATE dia="x01", sets_1A="x02", sets_1B="x03", sets_2A="x04", sets_2B="x05", sets_3A="x06", sets_3B="x07", hora="x08";',
     "10"  => 'SELECT J.*, G.grupo,
 
         SUM(IF((JG.sets_1A > 0 OR JG.sets_1B > 0)AND(J.id = JG.id_jogador_A OR J.id = JG.id_jogador_B),1,0)) AS JOGOS,	
@@ -61,6 +61,12 @@ $query_db = array(
         AND J.id_jogador_B = P2.id        
         AND (P1.id = "x00" OR P2.id="x00")
         ORDER BY J.dia DESC; ',
+
+    "13"  => 'SELECT * FROM tb_jogadores WHERE id_user IS NULL ORDER BY nivel DESC;',
+    "14"  => 'INSERT INTO tb_usuario (id,email,hash) VALUES ("x00","x01","x02")
+        ON DUPLICATE KEY UPDATE email="x01", hash="x02" ;',
+    "15" => 'UPDATE tb_jogadores SET id_user=(select MAX(id) AS new_id from tb_usuario) WHERE id="x03" ;',
+
 
 
 

@@ -46,6 +46,7 @@
         <legend>Sets</legend>
         <div class="col">
             <input id="match_date" type="date" style="width: auto; padding: 2px 20px;">
+            <input id="match_time" type="time" style="width: auto; padding: 2px 20px;">
             <h2 id="jogo"></h2>
             <div class="line">
                 
@@ -86,8 +87,10 @@
         const today = new Date
         const day = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2,0) +'-'+today.getDate().toString().padStart(2,0)
         document.querySelector('#match_date').value = day
+        document.querySelector('#match_time').value = '06:00'
     }else{
         document.querySelector('#match_date').value = mainData.dia
+        document.querySelector('#match_time').value = mainData.hora == null ? '06:00' : mainData.hora.substr(11,5)
     }
 
 
@@ -103,6 +106,7 @@
             params.sets_2B = document.querySelector('#B2').value
             params.sets_3A = document.querySelector('#A3').value
             params.sets_3B = document.querySelector('#B3').value
+            params.hora = '0000-00-00 '+ document.querySelector('#match_time').value
 
             const myPromisse = queryDB(params,9)
 

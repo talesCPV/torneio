@@ -12,42 +12,70 @@
             width: 100px;
         }
 
-        input[type=range]::-moz-range-track{
-            box-shadow: 3px 3px 3px #00AA00;
-            border: 2px solid #83E584;
-            height: 23px;
-           
-            border-radius: 23px;
-            background: #439643;
-            cursor: pointer;
-
+        
+        .form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding-top: 50px;
         }
 
     </style>
 
-
-    <fieldset>
-        <legend>Usuário</legend>
-
+    <div class="form">
         <div class="line">
-            <label for="edtUsr">Usuario</label>
-            <input id="edtUsr" type="text" maxlength="12">
+            <label for="edtUsr">Usuario*</label>
+            <input id="edtUsr" type="text" >
         </div>
 
         <div class="line">
-            <label for="edtPass">Senha</label>
-            <input id="edtPass" type="password" maxlength="10">
+            <label for="edtPass">Senha*</label>
+            <input id="edtPass" type="password" maxlength="12">
         </div>
 
-        <button  class="btn btn-primary" id="btnAddAtleta">Salvar</button>
+        <div class="line">
+            <label for="cmbPlayers">Jogador*</label>
+            <select id="cmbPlayers"></select>
+        </div>
+
+        <button  class="btn btn-primary" id="btnAddUser">Salvar</button>
+    </div>
 
 
-    </fieldset>
+
 
 
 </template>
 <script>
+    fillCmbAtleta(document.querySelector('#cmbPlayers'),13,'Selecione um Jogador')
 
+    document.querySelector('#btnAddUser').addEventListener('click',()=>{
+
+        const idUser = document.querySelector('#cmbPlayers').value
+        const email = document.querySelector('#edtUsr').value.trim()
+        const pass = document.querySelector('#edtPass').value.trim()
+
+        if(idUser!='0' && email!='' && pass!=''){
+            const params = new Object;
+                params.id = 'DEFAULT'
+                params.email = email
+                params.pass = pass.getHash(30)
+                params.idUser = idUser
+            const myPromisse = queryDB(params,14);
+            myPromisse.then((resolve)=>{
+                const myPromisse2 = queryDB(params,15)
+                myPromisse2.then((resolve)=>{
+                    alert('Usuário cadastrado com sucesso!')
+                    document.getElementById("myModal").style.display = "none"
+                })
+            })
+
+        }else{
+            alert('Preencha todos os campos obrigatórios')            
+        }
+
+    })
 
 
 </script>
