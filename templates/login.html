@@ -1,0 +1,43 @@
+<title>
+    Login de Usuário
+</title>
+<template>
+    <style>
+
+        .form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding-top: 50px;
+        }
+
+        #btnLogin, input[type="text"]{
+            width: 250px;
+            height: 30px;
+        }
+
+    </style>
+
+    <div class="form">
+
+
+        <input type="text" id="edtUser" placeholder="usuário">
+        <input type="text" id="edtSenha" placeholder="senha">
+        <button id="btnLogin" class="btn btn-primary">Login</button>
+
+
+        <p>Novo usuário? <a onclick="javascript:openHTML('novoUser.html')">CLIQUE AQUI</a></p>
+
+    </div>
+
+</template>
+<script>
+
+    function novoUsuario(){
+        alert(1)
+        openHTML('novoUser.html')
+    }
+
+
+</script>
