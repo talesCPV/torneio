@@ -31,13 +31,16 @@
                 <span class="line- line2"></span>
                 <span class="line- line3"></span>
             </div>
+            <div class="username">
+              <p id="usr"></p>
+            </div>
             <ul class="menu-items">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#atletas">Atletas</a></li>
                 <li><a href="#tabela">Tabela</a></li>
                 <li><a href="#jogos">Jogos</a></li>
                 <li><a href="#playoff">Play-Off</a></li>
-<!--                <li><a onclick="javascript:openHTML('login.html')">login</a></li>   -->
+                <li><a id="log-inout" onclick="login()">login</a></li> 
             </ul>
             <p></p>
         </div>
@@ -71,11 +74,11 @@
           <h2 class="h2-title">Tabela</h2>
             <div>
               <h2>Grupo 01</h2>
-              <table id="grupo01"></table>
+              <table class="classify" id="grupo01"></table>
             </div>
             <div>
               <h2>Grupo 02</h2>
-              <table id="grupo02"></table>
+              <table class="classify" id="grupo02"></table>
             </div>  
         </section>
   
@@ -192,6 +195,7 @@
         });
       });
 
+      checkLogin()
 
       fillTabAtleta(document.querySelector('#tbl_atletas'))
 
@@ -199,6 +203,18 @@
       fillTabGrupo(document.querySelector('#grupo02'),'B')
       fillTabJogos(document.querySelector('#JA'),'A')
       fillTabJogos(document.querySelector('#JB'),'B')
+
+
+      function login(){
+        if(checkLogin()){
+            localStorage.clear();
+            checkLogin()
+        }else{        
+          openHTML('login.html')
+        }
+
+
+      }
 
       function tabJogos(e){
         const table = e.target.parentNode.parentNode

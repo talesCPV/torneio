@@ -12,7 +12,7 @@
             padding-top: 50px;
         }
 
-        #btnLogin, input[type="text"]{
+        #btnLogin, input[type="text"], input[type="password"]{
             width: 250px;
             height: 30px;
         }
@@ -23,7 +23,7 @@
 
 
         <input type="text" id="edtUser" placeholder="usuário">
-        <input type="text" id="edtSenha" placeholder="senha">
+        <input type="password" id="edtSenha" placeholder="senha">
         <button id="btnLogin" class="btn btn-primary">Login</button>
 
 
@@ -34,10 +34,34 @@
 </template>
 <script>
 
-    function novoUsuario(){
-        alert(1)
+    function novoUsuario(){        
         openHTML('novoUser.html')
     }
+
+    document.querySelector('#btnLogin').addEventListener('click',()=>{
+
+        const params = new Object;
+            params.email =  document.querySelector('#edtUser').value.trim()
+            params.hash = document.querySelector('#edtSenha').value.trim().getHash(30)
+
+        const myPromisse = queryDB(params,16)
+
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            if(json.length > 0){
+                localStorage.setItem('idUser',json[0].id)
+                localStorage.setItem('idAtleta',json[0].id_atleta)
+                localStorage.setItem('atleta',json[0].atleta)
+                checkLogin()
+                document.getElementById("myModal").style.display = "none";
+            }else{
+                alert('Usuário ou senha inválido!')
+                localStorage.clear();
+                checkLogin()
+            }
+        })
+
+    })
 
 
 </script>

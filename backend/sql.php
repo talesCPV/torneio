@@ -66,7 +66,12 @@ $query_db = array(
     "14"  => 'INSERT INTO tb_usuario (id,email,hash) VALUES ("x00","x01","x02")
         ON DUPLICATE KEY UPDATE email="x01", hash="x02" ;',
     "15" => 'UPDATE tb_jogadores SET id_user=(select MAX(id) AS new_id from tb_usuario) WHERE id="x03" ;',
-
+    "16" => 'SELECT USR.*, ATL.id AS id_atleta, ATL.nome AS atleta
+        FROM tb_usuario AS USR
+        INNER JOIN tb_jogadores AS ATL
+        ON USR.id = ATL.id_user
+        AND USR.email="x00"
+        AND USR.hash="x01";',
 
 
 
