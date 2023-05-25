@@ -98,7 +98,7 @@
           const index = Array.from(table.children).indexOf(row)
           if(index > 0){
             mainData = e.target.parentNode.data
-            alert(`${mainData.jogador_A} x ${mainData.jogador_B}\n\n SET 01 - ${mainData.sets_1A.padStart(2,0)} x ${mainData.sets_1B.padStart(2,0)} \n SET 02 - ${mainData.sets_2A.padStart(2,0)} x ${mainData.sets_2B.padStart(2,0)}\n ${(mainData.sets_3A!='0' || mainData.sets_3B!='0')? `TIEBRK - ${mainData.sets_3A.padStart(2,0)} x ${mainData.sets_3B.padStart(2,0)}` :'' }`)
+            alert(`${mainData.dia.showDate()} as ${mainData.hora==null?'06:00':mainData.hora.showTime()}\n\n  ${mainData.jogador_A} x ${mainData.jogador_B}\n\n   SET 01 - ${mainData.sets_1A.padStart(2,0)} x ${mainData.sets_1B.padStart(2,0)} \n   SET 02 - ${mainData.sets_2A.padStart(2,0)} x ${mainData.sets_2B.padStart(2,0)}\n   ${(mainData.sets_3A!='0' || mainData.sets_3B!='0')? `TIEBRK - ${mainData.sets_3A.padStart(2,0)} x ${mainData.sets_3B.padStart(2,0)}` :'' }`)
           }
       })
 
