@@ -54,7 +54,18 @@
                     <h2>Grupo B</h2>
                     <table id="JB"></table>
                 </div>
-    
+                <div>
+                    <h2>Quartas</h2>
+                    <table id="JC"></table>
+                </div>    
+                <div>
+                    <h2>Semi</h2>
+                    <table id="JD"></table>
+                </div>    
+                <div>
+                    <h2>Final</h2>
+                    <table id="JE"></table>
+                </div>    
             </div>
             <button class="btn btn-primary" id="btnJogos">Configurar Jogos</button>
 
@@ -90,6 +101,9 @@
     fillTabGrupo(document.querySelector('#GB'),'B')
     fillTabJogos(document.querySelector('#JA'),'A')
     fillTabJogos(document.querySelector('#JB'),'B')
+    fillTabJogos(document.querySelector('#JC'),'C')
+    fillTabJogos(document.querySelector('#JD'),'D')
+    fillTabJogos(document.querySelector('#JE'),'E')
 
     document.querySelector('#btnAtleta').addEventListener('click',()=>{
         mainData = new Object

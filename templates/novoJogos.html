@@ -9,24 +9,44 @@
 
     <fieldset style="margin: 10px;">
         <legend>Jogos</legend>
-        <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+        <div style="display: flex; flex-direction: column;  justify-content: center; align-items: center; gap: 20px;">
             <div>
                 <h2>Grupo A</h2>
-                <table id="JA"></table>
+                <table id="J_A"></table>
                 <button id="btnGeraA" class="btn btn-primary">Gerar Jogos</button>    
             </div>
             <div>
                 <h2>Grupo B</h2>
-                <table id="JB"></table>
+                <table id="J_B"></table>
                 <button id="btnGeraB" class="btn btn-primary">Gerar Jogos</button>    
             </div>
 
         </div>
     </fieldset>
 
+    <fieldset>
+        <legend>Quartas</legend>
+        <table id="J_C"></table>
+        <button id="btnAddC" class="btn btn-primary">Add Jogos</button>    
+    </fieldset>
+
+    <fieldset>
+        <legend>Semi</legend>
+        <table id="J_D"></table>
+        <button id="btnAddD" class="btn btn-primary">Add Jogos</button>    
+    </fieldset>
+
+    <fieldset>
+        <legend>Final</legend>
+        <table id="J_E"></table>
+        <button id="btnAddE" class="btn btn-primary">Add Jogos</button>    
+    </fieldset>
 
 </template>
 <script>
+
+    fillTabJogos(document.querySelector('#J_A'),'A')
+    fillTabJogos(document.querySelector('#J_B'),'B')
 
     function geraGrupo(GP){
 
