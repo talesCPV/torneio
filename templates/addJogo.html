@@ -1,0 +1,81 @@
+<title>
+    Adicionar Novo Jogo
+</title>
+<template>
+    <style>
+
+    </style>
+
+    <fieldset>
+        <div>
+            <label for="cmbJogA">Jogador A</label>
+            <select id="cmbJogA"></select>    
+        </div>
+        <div>
+            <label for="cmbJogB">Jogador B</label>
+            <select id="cmbJogB"></select>
+        </div>
+        <div class="grupos">
+            <label for="cmbGrupo">Grupo/Fase</label>
+            <select id="cmbGrupo">
+                <option value="A">Grupo A</option>
+                <option value="B">Grupo B</option>
+                <option value="C">Quartas</option>
+                <option value="D">Semi</option>
+                <option value="E">Final</option>
+            </select>
+        </div>
+        <button class="btn close btn-primary" id="btnAdiciona">Adicionar</button>
+    </fieldset>
+
+
+
+
+</template>
+<script>
+
+    if(mainData.grupo == null){
+        document.querySelector('.grupos').style.display = "block"
+    }else{
+        document.querySelector('.grupos').style.display = "none"
+        document.querySelector('#cmbGrupo').value = mainData.grupo
+    }
+
+
+    fillCmbAtleta(document.querySelector('#cmbJogA'),0,'Selecione um Jogador')
+    fillCmbAtleta(document.querySelector('#cmbJogB'),0,'Selecione um Jogador')
+
+    document.querySelector('#btnAdiciona').addEventListener('click',()=>{
+
+        const p1 = document.querySelector('#cmbJogA').value
+        const p2 = document.querySelector('#cmbJogB').value
+        const gp = document.querySelector('#cmbGrupo').value
+
+        if(p1!='0' && p2!='0'){
+
+            const params = new Object;
+            params.id = 'DEFAULT'
+            params.grupo = gp
+            params.id_jogador_A = p1
+            params.id_jogador_B = p2
+
+            const myPromisse = queryDB(params,9)
+
+            myPromisse.then((resolve)=>{
+                gp =='A' ? fillTabJogos(document.querySelector('#JA'),'A') : 0
+                gp =='B' ? fillTabJogos(document.querySelector('#JB'),'B') : 0
+                gp =='C' ? fillTabJogos(document.querySelector('#JC'),'C') : 0
+                gp =='D' ? fillTabJogos(document.querySelector('#JD'),'D') : 0
+                gp =='E' ? fillTabJogos(document.querySelector('#JE'),'E') : 0
+                document.getElementById("myModal").style.display = "none";
+            })
+ 
+
+
+        }
+
+
+    })
+
+
+</script>

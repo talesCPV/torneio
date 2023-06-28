@@ -26,7 +26,7 @@
 
         <fieldset>
             <legend>Grupos</legend>
-            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
                 <div>
                     <h2>Grupo A</h2>
                     <table id="GA"></table>
@@ -68,6 +68,7 @@
                 </div>    
             </div>
             <button class="btn btn-primary" id="btnJogos">Configurar Jogos</button>
+            <button id="btnAddJogo" class="btn btn-primary">Adicionar Jogos</button>    
 
         </fieldset>
 
@@ -105,6 +106,11 @@
     fillTabJogos(document.querySelector('#JD'),'D')
     fillTabJogos(document.querySelector('#JE'),'E')
 
+    document.querySelector('#btnAddJogo').addEventListener('click',()=>{
+        mainData = {'grupo':null}
+        openHTML('addJogo.html')
+    })
+
     document.querySelector('#btnAtleta').addEventListener('click',()=>{
         mainData = new Object
         mainData.origem = 'new'
@@ -133,6 +139,27 @@
         openHTML('novoJogos.html')
     })
     
+
+    document.querySelector('#JC').addEventListener('click',(e)=>{
+          const table = e.target.parentNode.parentNode
+          const row = e.target.parentNode
+          const index = Array.from(table.children).indexOf(row)
+          if(index > 0){
+            mainData = e.target.parentNode.data
+            console.log(mainData)
+            if(confirm('Deseja deletar este jogo?')){
+                const params = new Object;
+                params.id = mainData.id
+                queryDB(params,17).then(()=>{
+                    fillTabJogos(document.querySelector('#JC'),'C')
+                })
+
+            }
+
+
+//            openHTML('resultados.html')
+          }
+      })
 
 
 

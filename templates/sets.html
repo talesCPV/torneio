@@ -107,7 +107,6 @@
             params.sets_3A = document.querySelector('#A3').value
             params.sets_3B = document.querySelector('#B3').value
             params.hora = '0000-00-00 '+ document.querySelector('#match_time').value
-
             const myPromisse = queryDB(params,9)
 
         myPromisse.then((resolve)=>{
@@ -115,7 +114,11 @@
             fillTabGrupo(document.querySelector('#grupo01'),'A')
             fillTabGrupo(document.querySelector('#grupo02'),'B')
             fillTabJogos(document.querySelector('#JA'),'A')
-            fillTabJogos(document.querySelector('#JB'),'B')                        
+            fillTabJogos(document.querySelector('#JB'),'B') 
+            fillTabJogos(document.querySelector('#JC'),'C')
+            fillTabJogos(document.querySelector('#JD'),'D')
+            fillTabJogos(document.querySelector('#JE'),'E')
+            
             document.getElementById("myModal").style.display = "none";
         })
 

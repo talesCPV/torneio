@@ -79,30 +79,7 @@ $query_db = array(
         ON USR.id = ATL.id_user
         AND USR.email="x00"
         AND USR.hash="x01";',
-    "17"  => 'SELECT J.*, G.grupo,
-        SUM(IF((JG.sets_1A > 0 OR JG.sets_1B > 0)AND(J.id = JG.id_jogador_A OR J.id = JG.id_jogador_B),1,0)) AS JOGOS,	
-        SUM( IF ( 
-                    (J.id = JG.id_jogador_A AND( (JG.sets_1A > JG.sets_1B)+(JG.sets_2A > JG.sets_2B)+(JG.sets_3A > JG.sets_3B) > 1)) OR
-                    (J.id = JG.id_jogador_B AND( (JG.sets_1B > JG.sets_1A)+(JG.sets_2B > JG.sets_2A)+(JG.sets_3B > JG.sets_3A) > 1)) ,1,0)) AS VITORIA,		            
-        SUM( IF ( 
-                    (J.id = JG.id_jogador_A AND( (JG.sets_1A < JG.sets_1B)+(JG.sets_2A < JG.sets_2B)+(JG.sets_3A < JG.sets_3B) > 1)) OR
-                    (J.id = JG.id_jogador_B AND( (JG.sets_1B < JG.sets_1A)+(JG.sets_2B < JG.sets_2A)+(JG.sets_3B < JG.sets_3A) > 1)) ,1,0)) AS DERROTA,
-
-        SUM( IF( 
-                    J.id = JG.id_jogador_A,(JG.sets_1A+JG.sets_2A),IF(
-                    J.id = JG.id_jogador_B,(JG.sets_1B+JG.sets_2B),0))) AS G_PRO,
-        SUM( IF( 
-                    J.id = JG.id_jogador_A,(JG.sets_1B+JG.sets_2B),IF(
-                    J.id = JG.id_jogador_B,(JG.sets_1A+JG.sets_2A),0))) AS G_CONTRA
-
-        FROM tb_jogadores AS J
-        INNER JOIN tb_grupos AS G
-        INNER JOIN tb_jogos AS JG
-        ON J.id = G.id_jogador
-        AND (J.id = JG.id_jogador_A OR J.id = JG.id_jogador_B)
-        AND G.grupo = "x00"      
-        GROUP BY J.id
-        ORDER BY VITORIA DESC, G_PRO DESC,JOGOS DESC; ',
+    "17"  => 'DELETE FROM tb_jogos WHERE id="x00";',
 
 
 
