@@ -61,7 +61,7 @@
 
     document.querySelector('#edtNome').value = mainData.nome
     document.querySelector('#edtNivel').value = mainData.nivel
-    document.querySelector('#group_title').innerHTML = `GRUPO ${mainData.grupo}`
+    document.querySelector('#group_title').innerHTML = mainData.nome
 
     const params = new Object;
         params.id = mainData.id
@@ -69,9 +69,33 @@
     myPromisse.then((resolve)=>{
         const json = JSON.parse(resolve)
         const tbl = document.querySelector('#tblMeusJogos')
-                
+
+        function change(obj){
+
+            const p2 = new Object
+            p2.nome = obj.jogador_A
+            p2.sets_1B = obj.sets_1A
+            p2.sets_2B = obj.sets_2A
+            p2.sets_3B = obj.sets_3A
+            p2.placar = obj.PLACAR_A
+
+            obj.jogador_A = obj.jogador_B
+            obj.sets_1A = obj.sets_1B
+            obj.sets_2A = obj.sets_2B
+            obj.sets_3A = obj.sets_3B
+            obj.PLACAR_A = obj.PLACAR_B
+
+            obj.jogador_B = p2.nome
+            obj.sets_1B = p2.sets_1B
+            obj.sets_2B = p2.sets_2B
+            obj.sets_3B = p2.sets_3B
+            obj.PLACAR_B = p2.placar
+
+        }
+
         tbl.head('Jogador A, |min,X|min, |min,Jogador B,','Upp,Upp,str,let,str,Upp')    
         for(let i=0; i<json.length; i++){
+            json[i].jogador_B == mainData.nome ? change(json[i]) : 0
             tbl.plot(json[i],'jogador_A,PLACAR_A|min,X|min,PLACAR_B|min,jogador_B','Upp,int,let,int,Upp') 
         }
 
